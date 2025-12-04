@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест IQ для Аркадия</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500&display=swap">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(40, 40, 60, 0.8) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(30, 30, 50, 0.6) 0%, transparent 50%),
+                linear-gradient(135deg, #0c0c14 0%, #1a1a2e 100%);
+            background-attachment: fixed;
+            color: #e6e6e6;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(100, 100, 120, 0.03) 0%, transparent 20%),
+                radial-gradient(circle at 85% 30%, rgba(120, 120, 150, 0.02) 0%, transparent 20%),
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, 0.01) 3px, rgba(255, 255, 255, 0.01) 3px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .marble-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                url('image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxwYXR0ZXJuIGlkPSJtYXJibGUiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiBwYXR0ZXJuVHJhbnNmb3JtPSJyb3RhdGUoNDUpIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMDAwIi8+PHBhdGggZD0iTTAgMjAwQzAgMjAwLDIwMCAwLDIwMCAwUzQwMCAyMDAsNDAwIDIwMFMyMDAgNDAwLDIwMCA0MDBTMCAyMDAsMCAyMDBaIiBmaWxsPSIjMTExIiBmaWxsLW9wYWNpdHk9IjAuMDMiLz48cGF0aCBkPSJNMTAwIDMwMEMxMDAgMzAwLDMwMCAxMDAsMzAwIDEwMFM1MDAgMzAwLDUwMCAzMDBTMzAwIDUwMCwzMDAgNTAwUzEwMCAzMDAsMTAwIDMwMFoiIGZpbGw9IiMyMjIiIGZpbGwtb3BhY2l0eT0iMC4wMiIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNtYXJibGUpIiBvcGFjaXR5PSIwLjMiLz48L3N2Zz4=');
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            background: rgba(15, 15, 25, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.5),
+                0 1px 0 rgba(255, 255, 255, 0.05) inset,
+                0 -1px 0 rgba(0, 0, 0, 0.5) inset;
+            overflow: hidden;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 30px 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: linear-gradient(180deg, rgba(30, 30, 45, 0.9) 0%, rgba(15, 15, 25, 0.7) 100%);
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #e6d5b8 0%, #c9b18d 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #a0a0c0;
+            font-weight: 300;
+            margin-top: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .progress-container {
+            padding: 0 30px 25px;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #8a7852 0%, #c9b18d 50%, #e6d5b8 100%);
+            width: 4%;
+            transition: width 0.5s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #8888aa;
+        }
+
+        .question-container {
+            padding: 40px 30px;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .question-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            color: #c9b18d;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .question-text {
+            font-size: 1.5rem;
+            line-height: 1.5;
+            margin-bottom: 35px;
+            color: #f0f0f0;
+            font-weight: 400;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            flex-grow: 1;
+        }
+
+        .option {
+            background: rgba(30, 30, 45, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 18px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            color: #d0d0e0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option:hover {
+            background: rgba(40, 40, 60, 0.8);
+            transform: translateY(-2px);
+            border-color: rgba(201, 177, 141, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .option.selected {
+            background: rgba(201, 177, 141, 0.15);
+            border-color: #c9b18d;
+            color: #e6d5b8;
+        }
+
+        .option.correct {
+            background: rgba(76, 175, 80, 0.15);
+            border-color: #4CAF50;
+            color: #a5d6a7;
+        }
+
+        .option.incorrect {
+            background: rgba(244, 67, 54, 0.15);
+            border-color: #F44336;
+            color: #ef9a9a;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            padding: 25px 30px 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .btn {
+            padding: 14px 28px;
+            background: linear-gradient(135deg, #2a2a3e 0%, #1a1a2e 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            color: #c9b18d;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #3a3a4e 0%, #2a2a3e 100%);
+            border-color: rgba(201, 177, 141, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, #8a7852 0%, #c9b18d 100%);
+            color: #0c0c14;
+            font-weight: 600;
+        }
+
+        .btn-next:hover:not(:disabled) {
+            background: linear-gradient(135deg, #c9b18d 0%, #e6d5b8 100%);
+            border-color: #e6d5b8;
+        }
+
+        .result-container {
+            padding: 50px 30px;
+            text-align: center;
+            display: none;
+        }
+
+        .result-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            color: #c9b18d;
+            margin-bottom: 20px;
+        }
+
+        .score {
+            font-size: 5rem;
+            font-weight: 700;
+            color: #e6d5b8;
+            margin: 30px 0;
+            text-shadow: 0 0 20px rgba(230, 213, 184, 0.3);
+        }
+
+        .joke {
+            font-size: 1.5rem;
+            color: #ff6b6b;
+            font-weight: 600;
+            margin: 40px 0;
+            padding: 20px;
+            background: rgba(255, 107, 107, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 107, 107, 0.2);
+        }
+
+        .photo-section {
+            margin-top: 50px;
+            padding: 30px;
+            background: rgba(20, 20, 35, 0.5);
+            border-radius: 16px;
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+
+        .photo-placeholder {
+            width: 100%;
+            height: 300px;
+            background: rgba(30, 30, 45, 0.3);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8888aa;
+            font-size: 1.1rem;
+            border: 2px dashed rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .question-text { font-size: 1.3rem; }
+            .option { padding: 15px; }
+            .score { font-size: 4rem; }
+            .btn { padding: 12px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="marble-overlay"></div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>Тест IQ для Аркадия</h1>
+            <p class="subtitle">25 вопросов, которые определяют гениальность. Или её отсутствие.</p>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text">
+                <span>Вопрос <span id="currentQuestion">1</span> из 25</span>
+                <span id="progressPercent">4%</span>
+            </div>
+        </div>
+
+        <div class="question-container" id="questionContainer">
+            <div class="question-number" id="questionNumber">Вопрос 1</div>
+            <div class="question-text" id="questionText"></div>
+            
+            <div class="options-container" id="optionsContainer"></div>
+        </div>
+
+        <div class="navigation">
+            <button class="btn" id="prevBtn" disabled>
+                <span>←</span> Назад
+            </button>
+            <button class="btn btn-next" id="nextBtn">
+                Далее <span>→</span>
+            </button>
+        </div>
+
+        <div class="result-container" id="resultContainer">
+            <h2 class="result-title">Ваш результат</h2>
+            <div class="score" id="finalScore">0</div>
+            
+            <div class="joke" id="jokeText">
+                Но это ничего не меняет. Аркадий всё равно провалил тест IQ.
+            </div>
+
+            <div class="photo-section">
+                <div class="photo-placeholder">
+                    <img src="/image.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "Какое число должно быть следующим в последовательности: 2, 6, 12, 20, 30, ...?",
+                options: ["38", "42", "44", "48"],
+                correct: 1, // 42
+                explanation: "Последовательность: 1×2=2, 2×3=6, 3×4=12, 4×5=20, 5×6=30, 6×7=42"
+            },
+            {
+                question: "Если все Блины являются Оладьями, а некоторые Оладьи - Сырники, то что верно?",
+                options: ["Все Сырники - Блины", "Некоторые Блины - Сырники", "Все Оладьи - Блины", "Некоторые Сырники - Блины"],
+                correct: 3, // Некоторые Сырники - Блины
+                explanation: "По логике включения множеств"
+            },
+            {
+                question: "Какое слово лишнее: Яблоко, Банан, Морковь, Апельсин?",
+                options: ["Яблоко", "Банан", "Морковь", "Апельсин"],
+                correct: 2, // Морковь
+                explanation: "Все кроме моркови - фрукты"
+            },
+            {
+                question: "Найдите число, которое не подходит к остальным: 16, 25, 36, 48, 64",
+                options: ["16", "25", "36", "48", "64"],
+                correct: 3, // 48
+                explanation: "Все числа кроме 48 - полные квадраты"
+            },
+            {
+                question: "Продолжите последовательность: А1, В2, С3, D4, ...",
+                options: ["Е5", "F5", "Е6", "F6"],
+                correct: 0, // Е5
+                explanation: "Буквы алфавита по порядку, цифры по порядку"
+            },
+            {
+                question: "Если 3 рабочих строят забор за 8 часов, сколько времени понадобится 4 рабочим?",
+                options: ["5 часов", "6 часов", "7 часов", "8 часов"],
+                correct: 1, // 6 часов
+                explanation: "Обратная пропорциональность: 3×8=24 человеко-часа, 24/4=6 часов"
+            },
+            {
+                question: "Какое число должно заменить знак вопроса: 4, 9, 16, 25, ?",
+                options: ["32", "36", "40", "49"],
+                correct: 1, // 36
+                explanation: "Квадраты чисел: 2²=4, 3²=9, 4²=16, 5²=25, 6²=36"
+            },
+            {
+                question: "Выберите фигуру, которая отличается от других:",
+                options: ["◇", "○", "□", "△", "☆"],
+                correct: 4, // ☆
+                explanation: "Все фигуры кроме звезды состоят из одного контура"
+            },
+            {
+                question: "Если СОЛНЦЕ - это 625143, то как будет ЛЕС?",
+                options: ["142", "241", "412", "214"],
+                correct: 3, // 214
+                explanation: "С=6, О=2, Л=5, Н=1, Ц=4, Е=3, поэтому Л=5, Е=3, С=6"
+            },
+            {
+                question: "Найдите недостающее число: 5, 10, 15, 20, ?",
+                options: ["22", "25", "30", "35"],
+                correct: 1, // 25
+                explanation: "Арифметическая прогрессия +5"
+            },
+            {
+                question: "Какое слово является антонимом к слову 'ЩЕДРЫЙ'?",
+                options: ["Богатый", "Скупой", "Добрый", "Открытый"],
+                correct: 1, // Скупой
+                explanation: "Прямой антоним"
+            },
+            {
+                question: "Если все Рыбы плавают, а некоторые Плавающие - Птицы, то что верно?",
+                options: ["Все Птицы плавают", "Некоторые Рыбы - Птицы", "Некоторые Птицы плавают", "Все Плавающие - Рыбы"],
+                correct: 2, // Некоторые Птицы плавают
+                explanation: "Логика категорических высказываний"
+            },
+            {
+                question: "Решите: (15 ÷ 3) × (8 - 5) + 7",
+                options: ["12", "15", "18", "22"],
+                correct: 3, // 22
+                explanation: "15÷3=5, 8-5=3, 5×3=15, 15+7=22"
+            },
+            {
+                question: "Найдите лишнее: Куб, Сфера, Пирамида, Квадрат, Цилиндр",
+                options: ["Куб", "Сфера", "Пирамида", "Квадрат", "Цилиндр"],
+                correct: 3, // Квадрат
+                explanation: "Все кроме квадрата - объемные фигуры"
+            },
+            {
+                question: "Продолжите: Север, Юг, Запад, ...",
+                options: ["Восток", "Полдень", "Направление", "Сторона"],
+                correct: 0, // Восток
+                explanation: "Стороны света"
+            },
+            {
+                question: "Какое число пропущено: 2, 5, 10, 17, 26, ?",
+                options: ["35", "37", "39", "41"],
+                correct: 1, // 37
+                explanation: "Разности: +3, +5, +7, +9, +11 = 37"
+            },
+            {
+                question: "Если ТЕРМОМЕТР показывает 20°C, сколько это по Фаренгейту?",
+                options: ["68°F", "72°F", "76°F", "80°F"],
+                correct: 0, // 68°F
+                explanation: "Формула: (20×9/5)+32=68"
+            },
+            {
+                question: "Найдите аналог: НОЧЬ относится к ДНЮ как ХОЛОД к ...",
+                options: ["Мороз", "Тепло", "Зима", "Лед"],
+                correct: 1, // Тепло
+                explanation: "Антонимичная пара"
+            },
+            {
+                question: "Сколько углов у куба?",
+                options: ["6", "8", "12", "24"],
+                correct: 1, // 8
+                explanation: "Куб имеет 8 вершин"
+            },
+            {
+                question: "Если 5 машин производят 5 деталей за 5 минут, сколько времени нужно 100 машинам для 100 деталей?",
+                options: ["5 минут", "20 минут", "100 минут", "500 минут"],
+                correct: 0, // 5 минут
+                explanation: "Каждая машина делает 1 деталь за 5 минут"
+            },
+            {
+                question: "Какое число следующее: 1, 1, 2, 3, 5, 8, 13, ?",
+                options: ["18", "20", "21", "23"],
+                correct: 2, // 21
+                explanation: "Числа Фибоначчи: каждое число равно сумме двух предыдущих"
+            },
+            {
+                question: "Выберите слово, противоположное по смыслу: ИСКРЕННИЙ",
+                options: ["Честный", "Лицемерный", "Откровенный", "Правдивый"],
+                correct: 1, // Лицемерный
+                explanation: "Прямой антоним"
+            },
+            {
+                question: "Решите: 7 × 8 ÷ 4 + 12 - 6",
+                options: ["16", "18", "20", "22"],
+                correct: 2, // 20
+                explanation: "7×8=56, 56÷4=14, 14+12=26, 26-6=20"
+            },
+            {
+                question: "Найдите лишнюю пару: Рука-Перчатка, Нога-Ботинок, Голова-Шляпа, Палец-Кольцо",
+                options: ["Рука-Перчатка", "Нога-Ботинок", "Голова-Шляпа", "Палец-Кольцо"],
+                correct: 3, // Палец-Кольцо
+                explanation: "Во всех парах кроме последней предмет одежды полностью покрывает часть тела"
+            },
+            {
+                question: "Если сегодня среда, какой день будет через 99 дней?",
+                options: ["Четверг", "Пятница", "Суббота", "Воскресенье"],
+                correct: 0, // Четверг
+                explanation: "99 ÷ 7 = 14 недель и 1 день остаток. Среда + 1 день = четверг"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let userAnswers = new Array(questions.length).fill(null);
+        let score = 0;
+
+        const questionNumberEl = document.getElementById('questionNumber');
+        const questionTextEl = document.getElementById('questionText');
+        const optionsContainerEl = document.getElementById('optionsContainer');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const progressFillEl = document.getElementById('progressFill');
+        const currentQuestionEl = document.getElementById('currentQuestion');
+        const progressPercentEl = document.getElementById('progressPercent');
+        const questionContainerEl = document.getElementById('questionContainer');
+        const resultContainerEl = document.getElementById('resultContainer');
+        const finalScoreEl = document.getElementById('finalScore');
+
+        function initTest() {
+            showQuestion(currentQuestion);
+            updateProgress();
+        }
+
+        function showQuestion(index) {
+            const question = questions[index];
+            
+            questionNumberEl.textContent = `Вопрос ${index + 1}`;
+            currentQuestionEl.textContent = index + 1;
+            questionTextEl.textContent = question.question;
+            
+            optionsContainerEl.innerHTML = '';
+            
+            question.options.forEach((option, i) => {
+                const optionEl = document.createElement('div');
+                optionEl.className = 'option';
+                if (userAnswers[index] === i) {
+                    optionEl.classList.add('selected');
+                }
+                optionEl.textContent = `${String.fromCharCode(65 + i)}) ${option}`;
+                optionEl.dataset.index = i;
+                
+                optionEl.addEventListener('click', () => selectOption(i));
+                optionsContainerEl.appendChild(optionEl);
+            });
+            
+            updateNavigationButtons();
+            updateProgress();
+        }
+
+        function selectOption(optionIndex) {
+            userAnswers[currentQuestion] = optionIndex;
+            
+            document.querySelectorAll('.option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            document.querySelectorAll('.option')[optionIndex].classList.add('selected');
+            
+            nextBtn.disabled = false;
+        }
+
+        function updateNavigationButtons() {
+            prevBtn.disabled = currentQuestion === 0;
+            
+            if (currentQuestion === questions.length - 1) {
+                nextBtn.textContent = 'Завершить тест';
+            } else {
+                nextBtn.textContent = 'Далее →';
+            }
+            
+            nextBtn.disabled = userAnswers[currentQuestion] === null && currentQuestion < questions.length - 1;
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            progressFillEl.style.width = `${progress}%`;
+            progressPercentEl.textContent = `${Math.round(progress)}%`;
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+            } else {
+                finishTest();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+            }
+        }
+
+        function finishTest() {
+            score = 0;
+            
+            questions.forEach((question, index) => {
+                if (userAnswers[index] === question.correct) {
+                    score++;
+                }
+            });
+            
+            questionContainerEl.style.display = 'none';
+            document.querySelector('.navigation').style.display = 'none';
+            document.querySelector('.progress-container').style.display = 'none';
+            resultContainerEl.style.display = 'block';
+            
+            finalScoreEl.textContent = score;
+        }
+
+        prevBtn.addEventListener('click', prevQuestion);
+        nextBtn.addEventListener('click', nextQuestion);
+
+        const photoPlaceholder = document.querySelector('.photo-placeholder');
+        photoPlaceholder.addEventListener('click', function() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        photoPlaceholder.style.backgroundImage = `url(${e.target.result})`;
+                        photoPlaceholder.style.backgroundSize = 'cover';
+                        photoPlaceholder.style.backgroundPosition = 'center';
+                        photoPlaceholder.textContent = '';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
+            input.click();
+        });
+
+        photoPlaceholder.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            photoPlaceholder.style.borderColor = '#c9b18d';
+        });
+
+        photoPlaceholder.addEventListener('dragleave', function() {
+            photoPlaceholder.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+        });
+
+        photoPlaceholder.addEventListener('drop', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            photoPlaceholder.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+            
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    photoPlaceholder.style.backgroundImage = `url(${event.target.result})`;
+                    photoPlaceholder.style.backgroundSize = 'cover';
+                    photoPlaceholder.style.backgroundPosition = 'center';
+                    photoPlaceholder.textContent = '';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        initTest();
+    </script>
+</body>
+</html>
